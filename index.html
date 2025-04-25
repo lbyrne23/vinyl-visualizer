@@ -76,11 +76,13 @@
         strokeWeight(2);
 
         let waveform = fft.waveform();
+        let bass = fft.getEnergy("bass");
+        console.log("Bass:", bass);
 
         beginShape();
-        for (let i = 0; i < waveform.length; i++) {
-          let x = map(i, 0, waveform.length, 0, width);
-          let y = map(waveform[i], -1, 1, 0, height);
+        for (let i = 0; i < bass.length; i++) {
+          let x = map(i, 0, bass.length, 0, width);
+          let y = map(bass[i], -1, 1, 0, height);
           vertex(x, y);
         }
         endShape();
