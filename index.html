@@ -31,6 +31,7 @@
     <script>
       let mic, fft;
       let started = false;
+      let startButton;
 
       function setup() {
         createCanvas(windowWidth, windowHeight);
@@ -40,22 +41,33 @@
         fill(255);
         text('Tap "Start Visualizer" to begin', width / 2, height / 2);
 
-        let startButton = createButton('Start Visualizer');
+        startButton = createButton('Start Visualizer');
         startButton.position(width / 2 - 90, height / 2 + 50);
-        startButton.mousePressed(() => {
-          userStartAudio().then(() => {
-            mic = new p5.AudioIn();
-            mic.start();
-            fft = new p5.FFT();
-            fft.setInput(mic);
-            started = true;
-            startButton.remove();
+        startButton.mousePressed(startMic);
+      }
+
+      function startMic() {
+        console.log("Button clicked. Starting mic...");
+        userStartAudio().then(() => {
+          console.log("Audio context resumed.");
+          mic = new p5.AudioIn();
+          mic.start(() => {
+            console.log("Mic started!");
+          }, (err) => {
+            console.error("Mic failed to start:", err);
           });
+          fft = new p5.FFT();
+          fft.setInput(mic);
+          started = true;
+          startButton.remove();
+        }).catch((err) => {
+          console.error("Audio context failed to resume:", err);
         });
       }
 
       function draw() {
         if (!started) return;
+
         background(10, 10, 20, 100);
 
         stroke(255);
