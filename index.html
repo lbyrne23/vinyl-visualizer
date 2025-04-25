@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Vinyl Visualizer&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;body style="margin:0; overflow:hidden;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>let mic, fft;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>function setup() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>createCanvas(windowWidth, windowHeight);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>noFill();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>mic = new p5.AudioIn();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>mic.start();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>fft = new p5.FFT();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>fft.setInput(mic);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>function draw() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background(10);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>stroke(255);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>strokeWeight(2);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let waveform = fft.waveform();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>beginShape();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>for (let i = 0; i &lt; waveform.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>let x = map(i, 0, waveform.length, 0, width);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>let y = map(waveform[i], -1, 1, 0, height);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>vertex(x, y);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>endShape();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>function touchStarted() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Required to start mic on mobile</p>
+<p class="p1"><span class="Apple-converted-space">        </span>getAudioContext().resume();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
