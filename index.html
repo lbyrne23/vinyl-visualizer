@@ -89,21 +89,19 @@
         }
         endShape();*/
 
-        let bass = fft.getEnergy("bass");
+        stroke(255, 100, 100);
+        strokeWeight(4);
+        noFill();
 
-stroke(255, 100, 100);
-strokeWeight(4);
-noFill();
-
-beginShape();
-for (let i = 0; i < 100; i++) {
-  let angle = map(i, 0, 100, 0, TWO_PI);
-  let radius = map(bass, 0, 255, 50, 300); // bass controls size
-  let x = width / 2 + cos(angle) * radius;
-  let y = height / 2 + sin(angle) * radius;
-  vertex(x, y);
-}
-endShape(CLOSE);
+        beginShape();
+        for (let i = 0; i < 100; i++) {
+          let angle = map(i, 0, 100, 0, TWO_PI);
+          let radius = map(bass, 0, 255, 50, 300); // bass controls size
+          let x = width / 2 + cos(angle) * radius;
+          let y = height / 2 + sin(angle) * radius;
+        vertex(x, y);
+      }
+        endShape(CLOSE);
       }
 
       function windowResized() {
