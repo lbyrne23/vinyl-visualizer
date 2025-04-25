@@ -76,6 +76,7 @@
         strokeWeight(2);
 
         let waveform = fft.waveform();
+        let spectrum = fft.analyze();
         let bass = fft.getEnergy("bass");
         console.log("Bass:", bass);
 
