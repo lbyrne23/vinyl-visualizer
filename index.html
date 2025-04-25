@@ -21,4 +21,61 @@
         font-size: 1.2em;
         border: none;
         border-radius: 8px;
-        background
+        background: #ff4081;
+        color: white;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let mic, fft;
+      let started = false;
+
+      function setup() {
+        createCanvas(windowWidth, windowHeight);
+        background(0);
+        textAlign(CENTER, CENTER);
+        textSize(32);
+        fill(255);
+        text('Tap "Start Visualizer" to begin', width / 2, height / 2);
+
+        let startButton = createButton('Start Visualizer');
+        startButton.position(width / 2 - 90, height / 2 + 50);
+        startButton.mousePressed(() => {
+          userStartAudio().then(() => {
+            mic = new p5.AudioIn();
+            mic.start();
+            fft = new p5.FFT();
+            fft.setInput(mic);
+            started = true;
+            startButton.remove();
+          });
+        });
+      }
+
+      function draw() {
+        if (!started) return;
+        background(10, 10, 20, 100);
+
+        stroke(255);
+        noFill();
+        strokeWeight(2);
+
+        let waveform = fft.waveform();
+
+        beginShape();
+        for (let i = 0; i < waveform.length; i++) {
+          let x = map(i, 0, waveform.length, 0, width);
+          let y = map(waveform[i], -1, 1, 0, height);
+          vertex(x, y);
+        }
+        endShape();
+      }
+
+      function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+      }
+    </script>
+  </body>
+</html>
