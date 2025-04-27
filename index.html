@@ -37,56 +37,47 @@
         let mid = fft.getEnergy("mid");
         let treble = fft.getEnergy("treble");
 
-        // mids
-        let waveform = fft.waveform();
+        // --- MID Wave: boosted and lively ---
+        stroke(100, 200, 255);
+        strokeWeight(2);
+        noFill();
+        beginShape();
+        for (let i = 0; i < width; i += 5) {
+          let angle = map(i, 0, width, 0, TWO_PI * 3); 
+          let amplitude = map(mid, 0, 255, 100, height / 2);
+          let noiseOffset = map(noise(i * 0.01, frameCount * 0.01), 0, 1, -20, 20);
+          let y = height / 2 + sin(angle + frameCount * 0.08) * amplitude + noiseOffset;
+          vertex(i, y);
+        }
+        endShape();
 
-// --- MID Wave: boosted and lively ---
-stroke(100, 200, 255);
-strokeWeight(2);
-noFill();
+        // --- TREBLE Inverted Wave: lively ---
+        stroke(255, 255, 150);
+        strokeWeight(2);
+        noFill();
+        beginShape();
+        for (let i = 0; i < width; i += 5) {
+          let angle = map(i, 0, width, 0, TWO_PI * 4);
+          let amplitude = map(treble, 0, 255, 80, height / 2.5);
+          let noiseOffset = map(noise(i * 0.02, frameCount * 0.02), 0, 1, -30, 30);
+          let y = height / 4 - sin(angle + frameCount * 0.1) * amplitude + noiseOffset;
+          vertex(i, y);
+        }
+        endShape();
 
-beginShape();
-for (let i = 0; i < width; i += 5) {
-  let angle = map(i, 0, width, 0, TWO_PI * 3); 
-  let amplitude = map(mid, 0, 255, 100, height / 0.5);
-  let noiseOffset = map(noise(i * 0.01, frameCount * 0.01), 0, 1, -20, 20); // slight random jitter
-  let y = height / 2 + sin(angle + frameCount * 0.08) * amplitude + noiseOffset;
-  vertex(i, y);
-}
-endShape();
-
-
-  //treble
-stroke(255, 255, 150);
-strokeWeight(2);
-noFill();
-
-beginShape();
-for (let i = 0; i < width; i += 5) {
-  let angle = map(i, 0, width, 0, TWO_PI * 4); // Faster wave
-  let amplitude = map(treble, 0, 255, 80, height / 2.5); // BOOSTED!
-  let noiseOffset = map(noise(i * 0.02, frameCount * 0.02), 0, 1, -30, 30); // more jitter for trebles
-  let y = height / 4 - sin(angle + frameCount * 0.1) * amplitude + noiseOffset;
-  vertex(i, y);
-}
-endShape();
-
-        // --- BASS Wave at Bottom ---
-stroke(255, 80, 80); // Red color for bass
-strokeWeight(4);
-noFill();
-
-beginShape();
-for (let i = 0; i < width; i += 5) {
-  let angle = map(i, 0, width, 0, TWO_PI * 2); // 2 cycles across screen
-  let amplitude = map(bass, 0, 255, 50, height / 2); // bass controls height
-  let y = height / 0.5 - sin(angle + frameCount * 0.1) * amplitude + noiseOffset;
-  vertex(i, y);
-}
-endShape();
-
-
-
+        // --- BASS Wave: higher on screen, smooth ---
+        stroke(255, 80, 80); // Red for bass
+        strokeWeight(4);
+        noFill();
+        beginShape();
+        for (let i = 0; i < width; i += 5) {
+          let angle = map(i, 0, width, 0, TWO_PI * 2);
+          let amplitude = map(bass, 0, 255, 50, height / 3); // smaller bass waves
+          let y = height * 0.85 - sin(angle + frameCount * 0.05) * amplitude; 
+          // 👆 Using height * 0.85 to lift the wave a bit up from the bottom
+          vertex(i, y);
+        }
+        endShape();
       }
 
       function mousePressed() {
