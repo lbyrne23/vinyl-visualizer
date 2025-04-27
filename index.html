@@ -10,29 +10,13 @@
         margin: 0;
         overflow: hidden;
         background: black;
-        color: white;
-        font-family: sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
       }
-      button {
-        padding: 1em 2em;
-        font-size: 1.2em;
-        border: none;
-        border-radius: 8px;
-        background: #ff4081;
-        color: white;
-        cursor: pointer;
-      }
+    
     </style>
   </head>
   <body>
     <script>
       let mic, fft;
-      let started = false;
-      let startButton;
 
       function setup() {
         createCanvas(windowWidth, windowHeight);
@@ -40,6 +24,8 @@
         startButton.mousePressed(startMic);
         
         mic = new p5.AudioIn();
+        mic.start(); 
+        
         fft = new p5.FFT();
         fft.setInput(mic);
       }
@@ -56,7 +42,7 @@
   
         let spectrum = fft.analyze();
         let bass = fft.getEnergy("bass");
-        console.log("Bass:", bass);
+
 
         /* beginShape();
         for (let i = 0; i < waveform.length; i++) {
@@ -76,7 +62,7 @@
           let radius = map(bass, 0, 255, 50, 300); // bass controls size
           let x = width / 2 + cos(angle) * radius;
           let y = height / 2 + sin(angle) * radius;
-        vertex(x, y);
+          vertex(x, y);
       }
         endShape(CLOSE);
 
@@ -104,6 +90,10 @@
           point(x, y);
         }
       }
+
+       console.log("Bass:", bass);
+        console.log("Mids:", mid);
+        console.log("Treble:", treble);
 
       function windowResized() {
         resizeCanvas(windowWidth, windowHeight);
