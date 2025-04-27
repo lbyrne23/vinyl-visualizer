@@ -53,18 +53,20 @@
         endShape(CLOSE);
 
         // mids
-        let numBars = 20;
-        let barWidth = width / numBars;
+        let waveform = fft.waveform();
 
-        for (let i = 0; i < numBars; i++) {
-          let barHeight = map(mid, 0, 255, 50, height * 0.9);
-          let x = i * barWidth;
-          let y = height - barHeight;
-          noStroke();
-          fill(100, 200, 255);
-          rect(x, y, barWidth - 4, barHeight);
+        noFill();
+        stroke(100, 200, 255); // Light blue waveform
+        strokeWeight(2);
+
+        beginShape();
+        for (let i = 0; i < waveform.length; i++) {
+          let x = map(i, 0, waveform.length, 0, width);
+          let y = map(waveform[i], -1, 1, 0, height);
+          vertex(x, y);
         }
-
+        endShape();
+        
         // treble
         let numDots = map(treble, 0, 255, 10, 100);
 
