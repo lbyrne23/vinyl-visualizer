@@ -41,26 +41,37 @@
 // spinny trebles
 push();
 translate(width / 2, height / 2);
-stroke(255, 230, 100, 80);
+stroke(255, 230, 100, 80); // Soft yellow
 noFill();
 strokeWeight(1.5);
 
-let numArms = 10;
-let spiralSize = map(treble*mid, 0, 255, height * 1.0, height * 1.2); 
-let pulse = 70 * sin(frameCount * 0.08); 
-beginShape();
-for (let angle = 0; angle < TWO_PI * numArms; angle += 0.02) {
-  let baseRadius = angle * (spiralSize / (TWO_PI * numArms));
-  let radius = baseRadius + pulse;
+let numArms = 12;
+let baseSize = height * 1.2; // Always big
+let trebleBoost = map(treble*mid, 0, 255, 0, height * 0.1); // Small boost only
+let spiralSize = baseSize + trebleBoost;
 
-  let spinSpeed = map(treble*mid, 0, 255, 0.005, 0.2);
-let spin = angle + frameCount * spinSpeed;
+let pulse = 50 * sin(frameCount * 0.05); // Gentle breathing
+
+beginShape();
+for (let angle = 0; angle < TWO_PI * numArms; angle += 0.03) {
+  let baseRadius = angle * (spiralSize / (TWO_PI * numArms));
+
+  // --- Controlled, floaty wobble ---
+  let wobble = map(noise(angle * 0.5, frameCount * 0.005), 0, 1, -40, 40);
+
+  let radius = baseRadius + wobble + pulse;
+
+  let spinSpeed = map(treble*mid, 0, 255, 0.005, 0.05); // Less sensitive now
+  let spin = angle + frameCount * spinSpeed;
+
   let x = cos(spin) * radius;
   let y = sin(spin) * radius;
 
   vertex(x, y);
 }
 endShape();
+pop();
+
 
 pop();
 
