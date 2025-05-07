@@ -54,7 +54,8 @@ for (let angle = 0; angle < TWO_PI * numArms; angle += 0.02) {
   let heavyWobble = map(noise(angle * 3, frameCount * 0.02), 0, 1, -100, 100);
   let radius = baseRadius + heavyWobble + pulse;
 
-  let spin = angle + frameCount * 0.1;
+  let spinSpeed = map(treble, 0, 255, 0.005, 0.2); // Slow when quiet, fast when loud
+let spin = angle + frameCount * spinSpeed;
   let x = cos(spin) * radius;
   let y = sin(spin) * radius;
 
