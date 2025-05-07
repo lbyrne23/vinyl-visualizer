@@ -58,8 +58,10 @@ for (let angle = 0; angle < TWO_PI * numArms; angle += 0.03) {
 
   // --- Controlled, floaty wobble ---
   let wobble = map(noise(angle * 0.5, frameCount * 0.005), 0, 1, -40, 40);
+  let heavyWobble = map(noise(angle * 3, frameCount * 0.02), 0, 1, -60, 60); 
 
-  let radius = baseRadius + wobble + pulse;
+
+  let radius = baseRadius + heavyWobble + pulse;
 
   let spinSpeed = map(treble*mid, 0, 255, 0.005, 0.05); // Less sensitive now
   let spin = angle + frameCount * spinSpeed;
