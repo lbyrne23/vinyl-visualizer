@@ -40,12 +40,12 @@
         // spinny treble
         push();
         translate(width / 2, height / 2);
-        stroke(200, 200, 255, 50); // Softer pale blue/purple, low opacity
+        fill(255, 230, 100, 50) 
         noFill();
         strokeWeight(1);
         
         let numArms = 7;
-        let spiralSize = map(treble, 0, 255, 80, 350); 
+        let spiralSize =  map(treble, 0, 255, height / 2, height * 1.2); 
         let pulse = 30 * sin(frameCount * 0.01); // Slow breathing effect
         
         beginShape();
