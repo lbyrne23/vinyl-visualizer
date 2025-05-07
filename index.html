@@ -46,7 +46,7 @@ noFill();
 strokeWeight(1.5);
 
 let numArms = 10;
-let spiralSize = map(treble, 0, 255, height / 1.5, height * 1.5);
+let spiralSize = map(treble, 0, 255, height * 0.9, height * 1.2); 
 let pulse = 70 * sin(frameCount * 0.08); 
 beginShape();
 for (let angle = 0; angle < TWO_PI * numArms; angle += 0.02) {
@@ -78,7 +78,7 @@ pop();
 beginShape();
 for (let i = 0; i < width; i += 5) {
   let angle = map(i, 0, width, 0, TWO_PI * 3); 
-  let amplitude = map(mid, 0, 255, 50, height / 4);
+  let amplitude = map(mid, 0, 255, 5, height / 4);
   let noiseOffset = map(noise(i * 0.01, frameCount * 0.01), 0, 1, -20, 20);
   let y = height / 4 + sin(angle + frameCount * 0.08) * amplitude + noiseOffset;
   vertex(i, y);
@@ -89,7 +89,7 @@ endShape();
 beginShape();
 for (let i = 0; i < width; i += 5) {
   let angle = map(i, 0, width, 0, TWO_PI * 3); 
-  let amplitude = map(mid, 0, 255, 50, height / 4);
+  let amplitude = map(mid, 0, 255, 5, height / 4);
   let noiseOffset = map(noise(i * 0.01 + 100, frameCount * 0.01), 0, 1, -20, 20);
   let y = height / 4 - sin(angle + frameCount * 0.08) * amplitude + noiseOffset;
   vertex(i, y);
