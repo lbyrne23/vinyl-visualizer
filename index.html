@@ -67,18 +67,35 @@ pop();
 
 
 
-        // mids-voice
+        // mids-voice (mouth shape)
+     
+
         stroke(100, 200, 255);
         strokeWeight(2);
         noFill();
-        beginShape();
-        for (let i = 0; i < width; i += 5) {
-          let angle = map(i, 0, width, 0, TWO_PI * 3); 
-          let amplitude = map(mid, 0, 255, 50, height / 4);
-          let y = height / 4 + sin(angle + frameCount * 0.08) * amplitude;
-          vertex(i, y);
-        }
-        endShape();
+
+// wave 1
+beginShape();
+for (let i = 0; i < width; i += 5) {
+  let angle = map(i, 0, width, 0, TWO_PI * 3); 
+  let amplitude = map(mid, 0, 255, 50, height / 4);
+  let noiseOffset = map(noise(i * 0.01, frameCount * 0.01), 0, 1, -20, 20);
+  let y = height / 4 + sin(angle + frameCount * 0.08) * amplitude + noiseOffset;
+  vertex(i, y);
+}
+endShape();
+
+// wave 2
+beginShape();
+for (let i = 0; i < width; i += 5) {
+  let angle = map(i, 0, width, 0, TWO_PI * 3); 
+  let amplitude = map(mid, 0, 255, 50, height / 4);
+  let noiseOffset = map(noise(i * 0.01 + 100, frameCount * 0.01), 0, 1, -20, 20);
+  let y = height / 4 - sin(angle + frameCount * 0.08) * amplitude + noiseOffset;
+  vertex(i, y);
+}
+endShape();
+
 
         // bass
         stroke(255, 80, 80); // Red for bass
