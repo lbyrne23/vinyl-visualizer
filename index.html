@@ -39,22 +39,30 @@
 
         // spinny treble
         push();
-        translate(width / 2, height / 2); 
-        stroke(255, 255, 150, 50);
+        translate(width / 2, height / 2);
+        stroke(200, 200, 255, 50); // Softer pale blue/purple, low opacity
         noFill();
         strokeWeight(1);
-
-        let numArms = 5;
-        let spiralSize = map(treble, 0, 255, 50, 300);
+        
+        let numArms = 7;
+        let spiralSize = map(treble, 0, 255, 80, 350); 
+        let pulse = 30 * sin(frameCount * 0.01); // Slow breathing effect
+        
         beginShape();
-        for (let angle = 0; angle < TWO_PI * numArms; angle += 0.1) {
-          let radius = angle * (spiralSize / (TWO_PI * numArms));
-          let x = cos(angle + frameCount * 0.01) * radius;
-          let y = sin(angle + frameCount * 0.01) * radius;
+        for (let angle = 0; angle < TWO_PI * numArms; angle += 0.05) {
+          let baseRadius = angle * (spiralSize / (TWO_PI * numArms));
+          let wobble = map(noise(angle * 0.5, frameCount * 0.005), 0, 1, -20, 20); // Organic motion
+          let radius = baseRadius + wobble + pulse;
+        
+          let spin = angle + frameCount * 0.005; // Slow spin
+          let x = cos(spin) * radius;
+          let y = sin(spin) * radius;
+        
           vertex(x, y);
         }
         endShape();
-        pop(); // Restore drawing settings
+
+pop();
 
         // mids-voice
         stroke(100, 200, 255);
@@ -64,8 +72,7 @@
         for (let i = 0; i < width; i += 5) {
           let angle = map(i, 0, width, 0, TWO_PI * 3); 
           let amplitude = map(mid, 0, 255, 50, height / 4);
-          let noiseOffset = map(noise(i * 0.01, frameCount * 0.01), 0, 1, -20, 20);
-          let y = height / 4 + sin(angle + frameCount * 0.08) * amplitude + noiseOffset;
+          let y = height / 4 + sin(angle + frameCount * 0.08) * amplitude;
           vertex(i, y);
         }
         endShape();
