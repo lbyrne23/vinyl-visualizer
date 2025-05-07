@@ -46,15 +46,14 @@ noFill();
 strokeWeight(1.5);
 
 let numArms = 10;
-let spiralSize = map(treble*mid*bass, 0, 255, height * 1.0, height * 1.2); 
+let spiralSize = map(treble*mid, 0, 255, height * 1.0, height * 1.2); 
 let pulse = 70 * sin(frameCount * 0.08); 
 beginShape();
 for (let angle = 0; angle < TWO_PI * numArms; angle += 0.02) {
   let baseRadius = angle * (spiralSize / (TWO_PI * numArms));
-  let heavyWobble = map(noise(angle * 3, frameCount * 0.02), 0, 1, -100, 100);
-  let radius = baseRadius + heavyWobble + pulse;
+  let radius = baseRadius + pulse;
 
-  let spinSpeed = map(treble*mid*bass, 0, 255, 0.005, 0.2); // Slow when quiet, fast when loud
+  let spinSpeed = map(treble*mid, 0, 255, 0.005, 0.2);
 let spin = angle + frameCount * spinSpeed;
   let x = cos(spin) * radius;
   let y = sin(spin) * radius;
@@ -78,7 +77,7 @@ pop();
 beginShape();
 for (let i = 0; i < width; i += 5) {
   let angle = map(i, 0, width, 0, TWO_PI * 3); 
-  let amplitude = map(mid, 0, 255, 1, height / 4);
+  let amplitude = map(mid, 0, 255, 0, height / 4);
   let y = height / 4 + sin(angle + frameCount * 0.08) * amplitude;
   vertex(i, y);
 }
@@ -88,7 +87,7 @@ endShape();
 beginShape();
 for (let i = 0; i < width; i += 5) {
   let angle = map(i, 0, width, 0, TWO_PI * 3); 
-  let amplitude = map(mid, 0, 255, 1, height / 4);
+  let amplitude = map(mid, 0, 255, 0, height / 4);
   let y = height / 4 - sin(angle + frameCount * 0.08) * amplitude;
   vertex(i, y);
 }
