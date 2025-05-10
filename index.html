@@ -29,7 +29,7 @@
       function draw() {
         if (!started) return;
 
-        background(10, 10, 20, 20);
+        background(10, 10, 20, 10);
 
         fft.analyze();
 
@@ -43,7 +43,7 @@ push();
 translate(width / 2, height / 2);
 stroke(255, 230, 100, 80); // Soft yellow
 noFill();
-strokeWeight(2);
+strokeWeight(2.5);
 
 let numArms = 8;
 let baseSize = height * 1.2; // Always big
