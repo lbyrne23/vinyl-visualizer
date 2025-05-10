@@ -114,7 +114,7 @@ endShape();
         beginShape();
         for (let i = 0; i < width; i += 5) {
           let angle = map(i, 0, width, 0, TWO_PI * 2);
-          let amplitude = map(bass, 0, 255, 50, height / 4);
+          let amplitude = map(bass-mid, 0, 255, 50, height / 4);
           let y = height * 0.75 - sin(angle + frameCount * 0.05) * amplitude;
           vertex(i, y);
         }
